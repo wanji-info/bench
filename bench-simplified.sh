@@ -5,8 +5,6 @@ true > $log
 
 {
 
-
-
 echo ""
 echo " A Multiple Bench Script By Wanji.info"
 echo " Usage: bash <(wget -qO bench.wanji.info)"
@@ -85,12 +83,8 @@ speed_test() {
 speed() {
     speed_test '' 'Speedtest.net'
     speed_test '21541' 'Los Angeles, US'
-    speed_test '43860' 'Dallas, US'
-    speed_test '40879' 'Montreal, CA'
     speed_test '24215' 'Paris, FR'
-    speed_test '28922' 'Amsterdam, NL'
     speed_test '32155' 'Hongkong, CN'
-    speed_test '6527'  'Seoul, KR'
     speed_test '7311'  'Singapore, SG'
     speed_test '21569' 'Tokyo, JP'
 }
@@ -207,6 +201,7 @@ checkwget() {
 	fi
 }
 
+
 ipv4_info() {
     local org="$(wget -q -T10 -O- ipinfo.io/org)"
     local city="$(wget -q -T10 -O- ipinfo.io/city)"
@@ -262,11 +257,6 @@ install_speedtest() {
     printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency"
 }
 
-print_intro() {
-    echo "-------------------- A Bench.sh Script By Teddysun -------------------"
-    echo " Version            : $(_green v2022-06-01)"
-    echo " Usage              : $(_red "wget -qO- bench.sh | bash")"
-}
 
 # Get System information
 get_system_info() {
@@ -386,16 +376,17 @@ print_end_time() {
 
 checkcurl;
 checkwget;
+! _exists "wget" && _red "Error: wget command not found.\n" && exit 1
 ! _exists "free" && _red "Error: free command not found.\n" && exit 1
 start_time=$(date +%s)
 get_system_info
 check_virt
-print_intro
 next
 print_system_info
 ipv4_info
 next
-
+# print_io_test
+# next
 install_speedtest && speed && rm -fr speedtest-cli
 next
 print_end_time
@@ -416,15 +407,7 @@ next
 #             performance via fio. The script is designed to not require any dependencies
 #             - either compiled or installed - nor admin privileges to run.
 #
-YABS_VERSION="v2022-08-20"
 
-echo -e '# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #' 
-echo -e '#              Yet-Another-Bench-Script              #'
-echo -e '#                     '$YABS_VERSION'                    #'
-echo -e '# https://github.com/masonr/yet-another-bench-script #'
-echo -e '# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #'
-
-echo -e
 date
 TIME_START=$(date '+%Y%m%d-%H%M%S')
 
@@ -642,17 +625,6 @@ DISTRO=$(grep 'PRETTY_NAME' /etc/os-release | cut -d '"' -f 2 )
 # echo -e "Distro     : $DISTRO"
 KERNEL=$(uname -r)
 # echo -e "Kernel     : $KERNEL"
-
-# if [ ! -z $JSON ]; then
-# 	UPTIME_S=$(awk '{print $1}' /proc/uptime)
-# 	IPV4=$([ ! -z $IPV4_CHECK ] && echo "true" || echo "false")
-# 	IPV6=$([ ! -z $IPV6_CHECK ] && echo "true" || echo "false")
-# 	AES=$([[ "$CPU_AES" = *Enabled* ]] && echo "true" || echo "false")
-# 	VIRT=$([[ "$CPU_VIRT" = *Enabled* ]] && echo "true" || echo "false")
-# 	JSON_RESULT='{"version":"'$YABS_VERSION'","time":"'$TIME_START'","os":{"arch":"'$ARCH'","distro":"'$DISTRO'","kernel":"'$KERNEL'",'
-# 	JSON_RESULT+='"uptime":'$UPTIME_S'},"net":{"ipv4":'$IPV4',"ipv6":'$IPV6'},"cpu":{"model":"'$CPU_PROC'","cores":'$CPU_CORES','
-# 	JSON_RESULT+='"freq":"'$CPU_FREQ'","aes":'$AES',"virt":'$VIRT'},"mem":{"ram":'$TOTAL_RAM_RAW',"swap":'$TOTAL_SWAP_RAW',"disk":'$TOTAL_DISK_RAW'}'
-# fi
 
 # create a directory in the same location that the script is being run to temporarily store YABS-related files
 DATE=`date -Iseconds | sed -e "s/:/_/g"`
@@ -4366,233 +4338,15 @@ function Goodbye() {
     fi
 }
 
-function ScriptTitle() {
-    if [[ "$language" == "e" ]]; then
-        echo -e " [Stream Platform & Game Region Restriction Test]"
-        echo ""
-        echo -e "${Font_Green}Github Repository:${Font_Suffix} ${Font_Yellow} https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}"
-        echo -e "${Font_Green}Telegram Discussion Group:${Font_Suffix} ${Font_Yellow} https://t.me/gameaccelerate ${Font_Suffix}"
-        echo -e "${Font_Purple}Supporting OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android (Termux), iOS (iSH)${Font_Suffix}"
-        echo ""
-        echo -e " ** Test Starts At: $(date)"
-        echo ""
-    else
-        echo -e " [流媒体平台及游戏区域限制测试]"
-        echo ""
-        echo -e "${Font_Green}项目地址${Font_Suffix} ${Font_Yellow}https://github.com/lmc999/RegionRestrictionCheck ${Font_Suffix}"
-        echo -e "${Font_Green}BUG反馈或使用交流可加TG群组${Font_Suffix} ${Font_Yellow}https://t.me/gameaccelerate ${Font_Suffix}"
-        echo -e "${Font_Purple}脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android (Termux), iOS (iSH)${Font_Suffix}"
-        echo ""
-        echo -e " ** 测试时间: $(date)"
-        echo ""
-    fi
-}
-# ScriptTitle
-
-function Start() {
-    if [[ "$language" == "e" ]]; then
-        echo -e "${Font_Blue}Please Select Test Region or Press ENTER to Test All Regions${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [1]: [ Multination + Taiwan ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [2]: [ Multination + Hong Kong ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [3]: [ Multination + Japan ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [4]: [ Multination + North America ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [5]: [ Multination + South America ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [6]: [ Multination + Europe ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [7]: [ Multination + Oceania ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number  [0]: [ Multination Only ]${Font_Suffix}"
-        echo -e "${Font_SkyBlue}Input Number [99]: [ Sport Platforms ]${Font_Suffix}"
-        read -p "Please Input the Correct Number or Press ENTER:" num
-    else
-        echo -e "${Font_Blue}请选择检测项目，直接按回车将进行全区域检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [1]: [ 跨国平台+台湾平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [2]: [ 跨国平台+香港平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [3]: [ 跨国平台+日本平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [4]: [ 跨国平台+北美平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [5]: [ 跨国平台+南美平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [6]: [ 跨国平台+欧洲平台 ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [7]: [跨国平台+大洋洲平台]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字  [0]: [   只进行跨国平台  ]检测${Font_Suffix}"
-        echo -e "${Font_SkyBlue}输入数字 [99]: [   体育直播平台    ]检测${Font_Suffix}"
-        echo -e "${Font_Purple}输入数字 [69]: [   广告推广投放    ]咨询${Font_Suffix}"
-        read -p "请输入正确数字或直接按回车:" num
-    fi
-}
-# Start
 
 function RunScript() {
-    # if [[ -n "${num}" ]]; then
-    #     if [[ "$num" -eq 1 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             TW_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             TW_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 2 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             HK_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             HK_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 3 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             JP_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             JP_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 4 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             NA_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             NA_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 5 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             SA_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             SA_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 6 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             EU_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             EU_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 7 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #             OA_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #             OA_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 99 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Sport_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Sport_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 0 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         CheckV4
-    #         if [[ "$isv4" -eq 1 ]]; then
-    #             Global_UnlockTest 4
-    #         fi
-    #         CheckV6
-    #         if [[ "$isv6" -eq 1 ]]; then
-    #             Global_UnlockTest 6
-    #         fi
-    #         Goodbye
-
-    #     elif [[ "$num" -eq 69 ]]; then
-    #         clear
-    #         ScriptTitle
-    #         echo ""
-    #         echo ""
-    #         echo -e "${Font_Red}**************************${Font_Suffix}"
-    #         echo -e "${Font_Red}*                        *${Font_Suffix}"
-    #         echo -e "${Font_Red}*${Font_Suffix} 广告招租               ${Font_Red}*${Font_Suffix}"
-    #         echo -e "${Font_Red}*${Font_Suffix} 请联系：@reidschat_bot ${Font_Red}*${Font_Suffix}"
-    #         echo -e "${Font_Red}*                        *${Font_Suffix}"
-    #         echo -e "${Font_Red}**************************${Font_Suffix}"
-
-    #     else
-    #         echo -e "${Font_Red}请重新执行脚本并输入正确号码${Font_Suffix}"
-    #         echo -e "${Font_Red}Please Re-run the Script with Correct Number Input${Font_Suffix}"
-    #         return
-    #     fi
-    # else
-    # clear
-    ScriptTitle
     CheckV4
     if [[ "$isv4" -eq 1 ]]; then
         Global_UnlockTest 4
-        TW_UnlockTest 4
-        HK_UnlockTest 4
-        JP_UnlockTest 4
-        NA_UnlockTest 4
-        SA_UnlockTest 4
-        EU_UnlockTest 4
-        OA_UnlockTest 4
     fi
     CheckV6
     if [[ "$isv6" -eq 1 ]]; then
         Global_UnlockTest 6
-        TW_UnlockTest 6
-        HK_UnlockTest 6
-        JP_UnlockTest 6
-        NA_UnlockTest 6
-        SA_UnlockTest 6
-        EU_UnlockTest 6
-        OA_UnlockTest 6
     fi
         # Goodbye
     # fi
@@ -4689,14 +4443,6 @@ speed_test(){
 		fi
 }
 
-preinfo() {
-	echo "——————————————————————————————————————————————————————————"
-	echo " SuperSpeed 全面测速修复版. By UXH & ernisn & oooldking"
-	echo " 节点更新: 2020/06/19 | 脚本更新: 2021/12/23"
-	echo " Github: https://github.com/uxh/superspeed"
-	# echo "——————————————————————————————————————————————————————————"
-}
-
 selecttest() {
 	echo -e "  测速类型:    ${GREEN}0.${PLAIN} 取消测速    ${GREEN}1.${PLAIN} 三网测速    ${GREEN}2.${PLAIN} 详细测速"
 	echo -ne "               ${GREEN}3.${PLAIN} 电信节点    ${GREEN}4.${PLAIN} 联通节点    ${GREEN}5.${PLAIN} 移动节点"
@@ -4711,121 +4457,6 @@ selecttest() {
 }
 
 runtest() {
-	[[ ${selection} == 0 ]] && exit 1
-
-	if [[ ${selection} == 1 ]]; then
-		echo "——————————————————————————————————————————————————————————"
-		echo "ID    测速服务器信息       上传/Mbps   下载/Mbps   延迟/ms"
-		start=$(date +%s) 
-
-		 speed_test '3633' '上海' '电信'
-		 speed_test '24012' '内蒙古呼和浩特' '电信'
-		 speed_test '27377' '北京５Ｇ' '电信'
-		 speed_test '29026' '四川成都' '电信'
-		# speed_test '29071' '四川成都' '电信'
-		 speed_test '17145' '安徽合肥５Ｇ' '电信'
-		 speed_test '27594' '广东广州５Ｇ' '电信'
-		# speed_test '27810' '广西南宁' '电信'
-		 speed_test '27575' '新疆乌鲁木齐' '电信'
-		# speed_test '26352' '江苏南京５Ｇ' '电信'
-		 speed_test '5396' '江苏苏州５Ｇ' '电信'
-		# speed_test '5317' '江苏连云港５Ｇ' '电信'
-		# speed_test '7509' '浙江杭州' '电信'
-		 speed_test '23844' '湖北武汉' '电信'
-		 speed_test '29353' '湖北武汉５Ｇ' '电信'
-		 speed_test '28225' '湖南长沙５Ｇ' '电信'
-		 speed_test '3973' '甘肃兰州' '电信'
-		# speed_test '19076' '重庆' '电信'
-		#***
-		# speed_test '21005' '上海' '联通'
-		 speed_test '24447' '上海５Ｇ' '联通'
-		# speed_test '5103' '云南昆明' '联通'
-		 speed_test '5145' '北京' '联通'
-		# speed_test '5505' '北京' '联通'
-		# speed_test '9484' '吉林长春' '联通'
-		 speed_test '2461' '四川成都' '联通'
-		 speed_test '27154' '天津５Ｇ' '联通'
-		# speed_test '5509' '宁夏银川' '联通'
-		# speed_test '5724' '安徽合肥' '联通'
-		# speed_test '5039' '山东济南' '联通'
-		 speed_test '26180' '山东济南５Ｇ' '联通'
-		 speed_test '26678' '广东广州５Ｇ' '联通'
-		# speed_test '16192' '广东深圳' '联通'
-		# speed_test '6144' '新疆乌鲁木齐' '联通'
-		 speed_test '13704' '江苏南京' '联通'
-		 speed_test '5485' '湖北武汉' '联通'
-		# speed_test '26677' '湖南株洲' '联通'
-		 speed_test '4870' '湖南长沙' '联通'
-		# speed_test '4690' '甘肃兰州' '联通'
-		# speed_test '4884' '福建福州' '联通'
-		# speed_test '31985' '重庆' '联通'
-		 speed_test '4863' '陕西西安' '联通'
-		#***
-		# speed_test '30154' '上海' '移动'
-		# speed_test '25637' '上海５Ｇ' '移动'
-		# speed_test '26728' '云南昆明' '移动'
-		# speed_test '27019' '内蒙古呼和浩特' '移动'
-		 speed_test '30232' '内蒙呼和浩特５Ｇ' '移动'
-		# speed_test '30293' '内蒙古通辽５Ｇ' '移动'
-		 speed_test '25858' '北京' '移动'
-		 speed_test '16375' '吉林长春' '移动'
-		# speed_test '24337' '四川成都' '移动'
-		 speed_test '17184' '天津５Ｇ' '移动'
-		# speed_test '26940' '宁夏银川' '移动'
-		# speed_test '31815' '宁夏银川' '移动'
-		# speed_test '26404' '安徽合肥５Ｇ' '移动'
-		 speed_test '27151' '山东临沂５Ｇ' '移动'
-		# speed_test '25881' '山东济南５Ｇ' '移动'
-		# speed_test '27100' '山东青岛５Ｇ' '移动'
-		# speed_test '26501' '山西太原５Ｇ' '移动'
-		 speed_test '31520' '广东中山' '移动'
-		# speed_test '6611' '广东广州' '移动'
-		# speed_test '4515' '广东深圳' '移动'
-		# speed_test '15863' '广西南宁' '移动'
-		# speed_test '16858' '新疆乌鲁木齐' '移动'
-		 speed_test '26938' '新疆乌鲁木齐５Ｇ' '移动'
-		# speed_test '17227' '新疆和田' '移动'
-		# speed_test '17245' '新疆喀什' '移动'
-		# speed_test '17222' '新疆阿勒泰' '移动'
-		# speed_test '27249' '江苏南京５Ｇ' '移动'
-		# speed_test '21845' '江苏常州５Ｇ' '移动'
-		# speed_test '26850' '江苏无锡５Ｇ' '移动'
-		# speed_test '17320' '江苏镇江５Ｇ' '移动'
-		 speed_test '25883' '江西南昌５Ｇ' '移动'
-		# speed_test '17223' '河北石家庄' '移动'
-		# speed_test '26331' '河南郑州５Ｇ' '移动'
-		# speed_test '6715' '浙江宁波５Ｇ' '移动'
-		# speed_test '4647' '浙江杭州' '移动'
-		# speed_test '16503' '海南海口' '移动'
-		# speed_test '28491' '湖南长沙５Ｇ' '移动'
-		# speed_test '16145' '甘肃兰州' '移动'
-		 speed_test '16171' '福建福州' '移动'
-		# speed_test '18444' '西藏拉萨' '移动'
-		 speed_test '16398' '贵州贵阳' '移动'
-		 speed_test '25728' '辽宁大连' '移动'
-		# speed_test '16167' '辽宁沈阳' '移动'
-		# speed_test '17584' '重庆' '移动'
-		# speed_test '26380' '陕西西安' '移动'
-		# speed_test '29105' '陕西西安５Ｇ' '移动'
-		# speed_test '29083' '青海西宁５Ｇ' '移动'
-		# speed_test '26656' '黑龙江哈尔滨' '移动'
-
-		end=$(date +%s)  
-		rm -rf speedtest*
-		echo "——————————————————————————————————————————————————————————"
-		time=$(( $end - $start ))
-		if [[ $time -gt 60 ]]; then
-			min=$(expr $time / 60)
-			sec=$(expr $time % 60)
-			echo -ne "  测试完成, 本次测速耗时: ${min} 分 ${sec} 秒"
-		else
-			echo -ne "  测试完成, 本次测速耗时: ${time} 秒"
-		fi
-		echo -ne "\n  当前时间: "
-		echo $(TZ=UTC-8 date +%Y-%m-%d" "%H:%M:%S)
-		echo -e "  ${GREEN}# 三网测速中为避免节点数不均及测试过久，每部分未使用所${PLAIN}"
-		echo -e "  ${GREEN}# 有节点，如果需要使用全部节点，可分别选择三网节点检测${PLAIN}"
-	fi
 
 	if [[ ${selection} == 2 ]]; then
 		echo "——————————————————————————————————————————————————————————"
@@ -4833,264 +4464,12 @@ runtest() {
 		start=$(date +%s) 
 
 		 speed_test '3633' '上海' '电信'
-		#  speed_test '24012' '内蒙古呼和浩特' '电信'
-		#  speed_test '27377' '北京５Ｇ' '电信'
-		#  speed_test '29026' '四川成都' '电信'
 		 speed_test '29071' '四川成都' '电信'
-		 speed_test '17145' '安徽合肥５Ｇ' '电信'
-		 speed_test '27594' '广东广州５Ｇ' '电信'
-		#  speed_test '27810' '广西南宁' '电信'
-		#  speed_test '27575' '新疆乌鲁木齐' '电信'
-		 speed_test '26352' '江苏南京５Ｇ' '电信'
-		#  speed_test '5396' '江苏苏州５Ｇ' '电信'
-		#  speed_test '5317' '江苏连云港５Ｇ' '电信'
-		 speed_test '36663' '江苏镇江５Ｇ' '电信'
-		#  speed_test '7509' '浙江杭州' '电信'
-		 speed_test '23844' '湖北武汉' '电信'
-		#  speed_test '29353' '湖北武汉５Ｇ' '电信'
-		 speed_test '28225' '湖南长沙５Ｇ' '电信'
-		 speed_test '3973' '甘肃兰州' '电信'
-		#  speed_test '19076' '重庆' '电信'
 		 speed_test '35722' '天津' '电信'
-		#  speed_test '34115' '天津５Ｇ' '电信'
-		#  speed_test '41355' '河南郑州５Ｇ' '电信'
-		#  speed_test '34988' '辽宁沈阳５Ｇ' '电信'
-
-		#  speed_test '21005' '上海' '联通'
 		 speed_test '24447' '上海５Ｇ' '联通'
-		#  speed_test '5103' '云南昆明' '联通'
-		#  speed_test '5145' '北京' '联通'
-		#  speed_test '5505' '北京' '联通'
-		#  speed_test '9484' '吉林长春' '联通'
-		#  speed_test '2461' '四川成都' '联通'
-		#  speed_test '27154' '天津５Ｇ' '联通'
-		#  speed_test '5509' '宁夏银川' '联通'
-		#  speed_test '5724' '安徽合肥' '联通'
-		#  speed_test '5039' '山东济南' '联通'
-		#  speed_test '26180' '山东济南５Ｇ' '联通'
-		#  speed_test '26678' '广东广州５Ｇ' '联通'
-		#  speed_test '16192' '广东深圳' '联通'
-		#  speed_test '6144' '新疆乌鲁木齐' '联通'
-		#  speed_test '13704' '江苏南京' '联通'
-		#  speed_test '5485' '湖北武汉' '联通'
-		#  speed_test '41009' '湖北武汉５Ｇ' '联通'
-		#  speed_test '26677' '湖南株洲' '联通'
 		 speed_test '4870' '湖南长沙' '联通'
-		#  speed_test '4690' '甘肃兰州' '联通'
-		#  speed_test '4884' '福建福州' '联通'
-		#  speed_test '31985' '重庆' '联通'
-		#  speed_test '4863' '陕西西安' '联通'
-
-		#  speed_test '30154' '上海' '移动'
 		 speed_test '25637' '上海５Ｇ' '移动'
-		#  speed_test '26728' '云南昆明' '移动'
-		#  speed_test '27019' '内蒙古呼和浩特' '移动'
-		#  speed_test '30232' '内蒙呼和浩特５Ｇ' '移动'
-		#  speed_test '30293' '内蒙古通辽５Ｇ' '移动'
-		#  speed_test '25858' '北京' '移动'
-		#  speed_test '16375' '吉林长春' '移动'
-		#  speed_test '24337' '四川成都' '移动'
-		#  speed_test '17184' '天津５Ｇ' '移动'
-		#  speed_test '26940' '宁夏银川' '移动'
-		#  speed_test '31815' '宁夏银川' '移动'
 		 speed_test '26404' '安徽合肥５Ｇ' '移动'
-		#  speed_test '27151' '山东临沂５Ｇ' '移动'
-		#  speed_test '25881' '山东济南５Ｇ' '移动'
-		#  speed_test '27100' '山东青岛５Ｇ' '移动'
-		#  speed_test '26501' '山西太原５Ｇ' '移动'
-		#  speed_test '31520' '广东中山' '移动'
-		#  speed_test '6611' '广东广州' '移动'
-		#  speed_test '4515' '广东深圳' '移动'
-		#  speed_test '15863' '广西南宁' '移动'
-		#  speed_test '16858' '新疆乌鲁木齐' '移动'
-		#  speed_test '26938' '新疆乌鲁木齐５Ｇ' '移动'
-		#  speed_test '17227' '新疆和田' '移动'
-		#  speed_test '17245' '新疆喀什' '移动'
-		#  speed_test '17222' '新疆阿勒泰' '移动'
-		#  speed_test '27249' '江苏南京５Ｇ' '移动'
-		#  speed_test '21845' '江苏常州５Ｇ' '移动'
-		#  speed_test '32291' '江苏常州５Ｇ' '移动'
-		#  speed_test '40131' '江苏苏州５Ｇ' '移动'
-		#  speed_test '26850' '江苏无锡５Ｇ' '移动'
-		#  speed_test '17320' '江苏镇江５Ｇ' '移动'
-		#  speed_test '25883' '江西南昌５Ｇ' '移动'
-		#  speed_test '17223' '河北石家庄' '移动'
-		#  speed_test '26331' '河南郑州５Ｇ' '移动'
-		 speed_test '6715' '浙江宁波５Ｇ' '移动'
-		#  speed_test '4647' '浙江杭州' '移动'
-		#  speed_test '16503' '海南海口' '移动'
-		#  speed_test '28491' '湖南长沙５Ｇ' '移动'
-		#  speed_test '16145' '甘肃兰州' '移动'
-		 speed_test '16171' '福建福州' '移动'
-		#  speed_test '18444' '西藏拉萨' '移动'
-		#  speed_test '16398' '贵州贵阳' '移动'
-		#  speed_test '25728' '辽宁大连' '移动'
-		#  speed_test '16167' '辽宁沈阳' '移动'
-		#  speed_test '17584' '重庆' '移动'
-		#  speed_test '26380' '陕西西安' '移动'
-		#  speed_test '29105' '陕西西安５Ｇ' '移动'
-		#  speed_test '29083' '青海西宁５Ｇ' '移动'
-		#  speed_test '26656' '黑龙江哈尔滨' '移动'
-
-		end=$(date +%s)  
-		rm -rf speedtest*
-		echo "——————————————————————————————————————————————————————————"
-		time=$(( $end - $start ))
-		if [[ $time -gt 60 ]]; then
-			min=$(expr $time / 60)
-			sec=$(expr $time % 60)
-			echo -ne "  测试完成, 本次测速耗时: ${min} 分 ${sec} 秒"
-		else
-			echo -ne "  测试完成, 本次测速耗时: ${time} 秒"
-		fi
-		echo -ne "\n  当前时间: "
-		echo $(TZ=UTC-8 date +%Y-%m-%d" "%H:%M:%S)
-	fi
-
-	if [[ ${selection} == 3 ]]; then
-		echo "——————————————————————————————————————————————————————————"
-		echo "ID    测速服务器信息       上传/Mbps   下载/Mbps   延迟/ms"
-		start=$(date +%s) 
-
-		 speed_test '3633' '上海' '电信'
-		 speed_test '24012' '内蒙古呼和浩特' '电信'
-		 speed_test '27377' '北京５Ｇ' '电信'
-		 speed_test '29026' '四川成都' '电信'
-		 speed_test '29071' '四川成都' '电信'
-		 speed_test '17145' '安徽合肥５Ｇ' '电信'
-		 speed_test '27594' '广东广州５Ｇ' '电信'
-		 speed_test '27810' '广西南宁' '电信'
-		 speed_test '27575' '新疆乌鲁木齐' '电信'
-		 speed_test '26352' '江苏南京５Ｇ' '电信'
-		 speed_test '5396' '江苏苏州５Ｇ' '电信'
-		 speed_test '5317' '江苏连云港５Ｇ' '电信'
-		 speed_test '36663' '江苏镇江５Ｇ' '电信'
-		 speed_test '7509' '浙江杭州' '电信'
-		 speed_test '23844' '湖北武汉' '电信'
-		 speed_test '29353' '湖北武汉５Ｇ' '电信'
-		 speed_test '28225' '湖南长沙５Ｇ' '电信'
-		 speed_test '3973' '甘肃兰州' '电信'
-		 speed_test '19076' '重庆' '电信'
-		 speed_test '35722' '天津' '电信'
-		 speed_test '34115' '天津５Ｇ' '电信'
-		 speed_test '41355' '河南郑州５Ｇ' '电信'
-		 speed_test '34988' '辽宁沈阳５Ｇ' '电信'
-
-		end=$(date +%s)  
-		rm -rf speedtest*
-		echo "——————————————————————————————————————————————————————————"
-		time=$(( $end - $start ))
-		if [[ $time -gt 60 ]]; then
-			min=$(expr $time / 60)
-			sec=$(expr $time % 60)
-			echo -ne "  测试完成, 本次测速耗时: ${min} 分 ${sec} 秒"
-		else
-			echo -ne "  测试完成, 本次测速耗时: ${time} 秒"
-		fi
-		echo -ne "\n  当前时间: "
-		echo $(TZ=UTC-8 date +%Y-%m-%d" "%H:%M:%S)
-	fi
-
-	if [[ ${selection} == 4 ]]; then
-		echo "——————————————————————————————————————————————————————————"
-		echo "ID    测速服务器信息       上传/Mbps   下载/Mbps   延迟/ms"
-		start=$(date +%s) 
-
-		 speed_test '21005' '上海' '联通'
-		 speed_test '24447' '上海５Ｇ' '联通'
-		 speed_test '5103' '云南昆明' '联通'
-		 speed_test '5145' '北京' '联通'
-		 speed_test '5505' '北京' '联通'
-		 speed_test '9484' '吉林长春' '联通'
-		 speed_test '2461' '四川成都' '联通'
-		 speed_test '27154' '天津５Ｇ' '联通'
-		 speed_test '5509' '宁夏银川' '联通'
-		 speed_test '5724' '安徽合肥' '联通'
-		 speed_test '5039' '山东济南' '联通'
-		 speed_test '26180' '山东济南５Ｇ' '联通'
-		 speed_test '26678' '广东广州５Ｇ' '联通'
-		 speed_test '16192' '广东深圳' '联通'
-		 speed_test '6144' '新疆乌鲁木齐' '联通'
-		 speed_test '13704' '江苏南京' '联通'
-		 speed_test '5485' '湖北武汉' '联通'
-		 speed_test '41009' '湖北武汉５Ｇ' '联通'
-		 speed_test '26677' '湖南株洲' '联通'
-		 speed_test '4870' '湖南长沙' '联通'
-		 speed_test '4690' '甘肃兰州' '联通'
-		 speed_test '4884' '福建福州' '联通'
-		 speed_test '31985' '重庆' '联通'
-		 speed_test '4863' '陕西西安' '联通'
-
-		end=$(date +%s)  
-		rm -rf speedtest*
-		echo "——————————————————————————————————————————————————————————"
-		time=$(( $end - $start ))
-		if [[ $time -gt 60 ]]; then
-			min=$(expr $time / 60)
-			sec=$(expr $time % 60)
-			echo -ne "  测试完成, 本次测速耗时: ${min} 分 ${sec} 秒"
-		else
-			echo -ne "  测试完成, 本次测速耗时: ${time} 秒"
-		fi
-		echo -ne "\n  当前时间: "
-		echo $(TZ=UTC-8 date +%Y-%m-%d" "%H:%M:%S)
-	fi
-
-	if [[ ${selection} == 5 ]]; then
-		echo "——————————————————————————————————————————————————————————"
-		echo "ID    测速服务器信息       上传/Mbps   下载/Mbps   延迟/ms"
-		start=$(date +%s) 
-
-		 speed_test '30154' '上海' '移动'
-		 speed_test '25637' '上海５Ｇ' '移动'
-		 speed_test '26728' '云南昆明' '移动'
-		 speed_test '27019' '内蒙古呼和浩特' '移动'
-		 speed_test '30232' '内蒙呼和浩特５Ｇ' '移动'
-		 speed_test '30293' '内蒙古通辽５Ｇ' '移动'
-		 speed_test '25858' '北京' '移动'
-		 speed_test '16375' '吉林长春' '移动'
-		 speed_test '24337' '四川成都' '移动'
-		 speed_test '17184' '天津５Ｇ' '移动'
-		 speed_test '26940' '宁夏银川' '移动'
-		 speed_test '31815' '宁夏银川' '移动'
-		 speed_test '26404' '安徽合肥５Ｇ' '移动'
-		 speed_test '27151' '山东临沂５Ｇ' '移动'
-		 speed_test '25881' '山东济南５Ｇ' '移动'
-		 speed_test '27100' '山东青岛５Ｇ' '移动'
-		 speed_test '26501' '山西太原５Ｇ' '移动'
-		 speed_test '31520' '广东中山' '移动'
-		 speed_test '6611' '广东广州' '移动'
-		 speed_test '4515' '广东深圳' '移动'
-		 speed_test '15863' '广西南宁' '移动'
-		 speed_test '16858' '新疆乌鲁木齐' '移动'
-		 speed_test '26938' '新疆乌鲁木齐５Ｇ' '移动'
-		 speed_test '17227' '新疆和田' '移动'
-		 speed_test '17245' '新疆喀什' '移动'
-		 speed_test '17222' '新疆阿勒泰' '移动'
-		 speed_test '27249' '江苏南京５Ｇ' '移动'
-		 speed_test '21845' '江苏常州５Ｇ' '移动'
-		 speed_test '32291' '江苏常州５Ｇ' '移动'
-		 speed_test '40131' '江苏苏州５Ｇ' '移动'
-		 speed_test '26850' '江苏无锡５Ｇ' '移动'
-		 speed_test '17320' '江苏镇江５Ｇ' '移动'
-		 speed_test '25883' '江西南昌５Ｇ' '移动'
-		 speed_test '17223' '河北石家庄' '移动'
-		 speed_test '26331' '河南郑州５Ｇ' '移动'
-		 speed_test '6715' '浙江宁波５Ｇ' '移动'
-		 speed_test '4647' '浙江杭州' '移动'
-		 speed_test '16503' '海南海口' '移动'
-		 speed_test '28491' '湖南长沙５Ｇ' '移动'
-		 speed_test '16145' '甘肃兰州' '移动'
-		 speed_test '16171' '福建福州' '移动'
-		 speed_test '18444' '西藏拉萨' '移动'
-		 speed_test '16398' '贵州贵阳' '移动'
-		 speed_test '25728' '辽宁大连' '移动'
-		 speed_test '16167' '辽宁沈阳' '移动'
-		 speed_test '17584' '重庆' '移动'
-		 speed_test '26380' '陕西西安' '移动'
-		 speed_test '29105' '陕西西安５Ｇ' '移动'
-		 speed_test '29083' '青海西宁５Ｇ' '移动'
-		 speed_test '26656' '黑龙江哈尔滨' '移动'
 
 		end=$(date +%s)  
 		rm -rf speedtest*
@@ -5113,62 +4492,25 @@ runall() {
 	checkroot;
 	checksystem;
 	checkpython;
+
 	checkspeedtest;
 	# clear
 	speed_test;
-	preinfo;    
 	runtest;
 	rm -rf speedtest*
 }
 
 runall
 
-
-#############
-# 回程测试脚本
-#############
-
-echo "回程测试 wget -qO- git.io/besttrace | bash"
-
-#!/bin/bash
-
-# apt -y install unzip
-
-# install besttrace
-if [ ! -f "besttrace2021" ]; then
-    wget https://github.com/zq/shell/raw/master/besttrace2021
-    # unzip besttrace4linux.zip
-    chmod +x besttrace2021
-fi
-
-## start to use besttrace
-
-next() {
-    printf "%-70s\n" "-" | sed 's/\s/-/g'
-}
-
-# clear
-next
-
-ip_list=(219.141.147.210 202.96.209.133 58.60.188.222 202.106.50.1 210.22.97.1 210.21.196.6 221.179.155.161 211.136.112.200 120.196.165.24 202.112.14.151)
-ip_addr=(北京电信 上海电信 深圳电信 北京联通 上海联通 深圳联通 北京移动 上海移动 深圳移动 成都教育网)
-# ip_len=${#ip_list[@]}
-
-for i in {0..9}
-do
-	echo ${ip_addr[$i]}
-	./besttrace2021 -q 1 ${ip_list[$i]}
-	next
-done
-# 需要去掉颜色字符，参考 https://stackoverflow.com/questions/17998978/removing-colors-from-output
 } | (tee  >(sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,3})*)?[mGK]//g' > $log))
 ##############
 # 保存文件到 ubuntu pastebin
 #############
 
-share_link=$( curl -v --data-urlencode "content@$log" -d "poster=bench.log" -d "syntax=text" "https://paste.ubuntu.com" 2>&1 | \
-			grep "Location" | awk '{print $3}' )
+share_link=$( curl -sF 'clbin=<-' https://clbin.com < $log )
 echo " Share result:"
-echo " https://paste.ubuntu.com/$share_link"
+echo " $share_link"
 echo ""
+rm "geekbench_claim.url"
+rm "bench.log"
 # 这一部分截取自 https://github.com/sayem314/serverreview-benchmark/blob/master/bench.sh
