@@ -9,7 +9,7 @@ true > $log
 
 echo ""
 echo " A Multiple Bench Script By Wanji.info"
-echo " Usage: bash <(wget -qO bench.wanji.info)"
+echo " Usage: bash <(wget -qO- bench.wanji.info)"
 # echo "------------------------------------------------------------------------------"
 echo ""
 
@@ -5166,9 +5166,10 @@ done
 # 保存文件到 ubuntu pastebin
 #############
 
-share_link=$( curl -v --data-urlencode "content@$log" -d "poster=bench.log" -d "syntax=text" "https://paste.ubuntu.com" 2>&1 | \
-			grep "Location" | awk '{print $3}' )
+share_link=$( curl -sF 'clbin=<-' https://clbin.com < $log )
 echo " Share result:"
-echo " https://paste.ubuntu.com/$share_link"
+echo " $share_link"
 echo ""
+rm "geekbench_claim.url"
+rm "bench.log"
 # 这一部分截取自 https://github.com/sayem314/serverreview-benchmark/blob/master/bench.sh
