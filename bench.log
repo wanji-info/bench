@@ -1,0 +1,253 @@
+
+ A Multiple Bench Script By Wanji.info
+ Usage: bash <(wget -qO- bench.wanji.info)
+
+-------------------- A Bench.sh Script By Teddysun -------------------
+ Version            : v2022-06-01
+ Usage              : wget -qO- bench.sh | bash
+----------------------------------------------------------------------
+ CPU Model          : AMD EPYC Processor
+ CPU Cores          : 4 @ 3393.624 MHz
+ CPU Cache          : 512 KB
+ AES-NI             : Enabled
+ VM-x/AMD-V         : Disabled
+ Total Disk         : 107.5 GB (5.5 GB Used)
+ Total Mem          : 15.3 GB (884.6 MB Used)
+ System uptime      : 11 days, 9 hour 33 min
+ Load average       : 0.00, 0.02, 0.00
+ OS                 : Ubuntu 20.04.5 LTS
+ Arch               : x86_64 (64 Bit)
+ Kernel             : 5.4.0-125-generic
+ TCP CC             : cubic
+ Virtualization     : KVM
+ Organization       : AS206216 Advin Services LLC
+ Location           : Amsterdam / NL
+ Region             : North Holland
+----------------------------------------------------------------------
+ Node Name        Upload Speed      Download Speed      Latency     
+ Speedtest.net    731.69 Mbps       708.57 Mbps         119.93 ms   
+ Los Angeles, US  604.29 Mbps       640.33 Mbps         147.50 ms   
+ Dallas, US       713.10 Mbps       650.11 Mbps         119.85 ms   
+ Montreal, CA     832.92 Mbps       844.33 Mbps         91.25 ms    
+ Paris, FR        882.97 Mbps       879.47 Mbps         25.58 ms    
+ Amsterdam, NL    893.36 Mbps       888.59 Mbps         11.44 ms    
+ Hongkong, CN     406.20 Mbps       825.88 Mbps         206.01 ms   
+ Seoul, KR        310.13 Mbps       431.60 Mbps         268.47 ms   
+ Singapore, SG    475.81 Mbps       453.63 Mbps         177.74 ms   
+ Tokyo, JP        360.24 Mbps       495.80 Mbps         242.93 ms   
+----------------------------------------------------------------------
+ Finished in        : 5 min 8 sec
+ Timestamp          : 2022-10-14 11:14:01 UTC
+----------------------------------------------------------------------
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+#              Yet-Another-Bench-Script              #
+#                     v2022-08-20                    #
+# https://github.com/masonr/yet-another-bench-script #
+# ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
+
+Fri Oct 14 11:14:01 UTC 2022
+
+Preparing system for disk tests...Generating fio test file...Running fio random mixed R+W disk test with 4k block size...Running fio random mixed R+W disk test with 64k block size...Running fio random mixed R+W disk test with 512k block size...Running fio random mixed R+W disk test with 1m block size...fio Disk Speed Tests (Mixed R/W 50/50):
+---------------------------------
+Block Size | 4k            (IOPS) | 64k           (IOPS)
+  ------   | ---            ----  | ----           ---- 
+Read       | 58.82 MB/s   (14.7k) | 854.08 MB/s  (13.3k)
+Write      | 58.92 MB/s   (14.7k) | 858.57 MB/s  (13.4k)
+Total      | 117.74 MB/s  (29.4k) | 1.71 GB/s    (26.7k)
+           |                      |                     
+Block Size | 512k          (IOPS) | 1m            (IOPS)
+  ------   | ---            ----  | ----           ---- 
+Read       | 1.79 GB/s     (3.5k) | 1.79 GB/s     (1.7k)
+Write      | 1.89 GB/s     (3.6k) | 1.91 GB/s     (1.8k)
+Total      | 3.68 GB/s     (7.1k) | 3.70 GB/s     (3.6k)
+
+Running GB5 benchmark test... *cue elevator music*Geekbench 5 Benchmark Test:
+---------------------------------
+Test            | Value                         
+                |                               
+Single Core     | 1316                          
+Multi Core      | 3966                          
+Full Test       | https://browser.geekbench.com/v5/cpu/17945894
+
+ [流媒体平台及游戏区域限制测试]
+
+项目地址 https://github.com/lmc999/RegionRestrictionCheck 
+BUG反馈或使用交流可加TG群组 https://t.me/gameaccelerate 
+脚本适配OS: CentOS 6+, Ubuntu 14.04+, Debian 8+, MacOS, Android (Termux), iOS (iSH)
+
+ ** 测试时间: Fri Oct 14 11:17:02 UTC 2022
+
+ ** 正在测试IPv4解锁情况 
+--------------------------------
+ ** 您的网络为: Advin Services LLC (45.61.*.*) 
+
+
+============[ Multination ]============
+ Dazn:					No
+ HotStar:				No
+ Disney+:				No
+ Netflix:				Originals Only
+ YouTube Premium:			Yes (Region: NL)
+ Amazon Prime Video:			Yes (Region: US)
+ TVBAnywhere+:				Yes
+ iQyi Oversea Region:			US
+ Viu.com:				No
+ YouTube CDN:				Amsterdam 
+ Netflix Preferred CDN:			Amsterdam  
+ Spotify Registration:			No
+ Steam Currency:			USD
+=======================================
+==============[ Taiwan ]===============
+ KKTV:					No
+ LiTV:					No
+ MyVideo:				No
+ 4GTV.TV:				No
+ LineTV.TW:				No
+ Hami Video:				No
+ CatchPlay+:				No
+ HBO GO Asia:				No
+ Bahamut Anime:				Failed (Network Connection)
+ Eleven Sports TW:			Failed (Network Connection)
+ Bilibili Taiwan Only:			No
+=======================================
+=============[ Hong Kong ]=============
+ Now E:					No
+ Viu.TV:				No
+ MyTVSuper:				No
+ HBO GO Asia:				No
+ BiliBili Hongkong/Macau/Taiwan:	No
+=======================================
+===============[ Japan ]===============
+ DMM:					No
+ Abema.TV:				No
+ Niconico:				No
+ music.jp:				No
+ Telasa:				Yes
+ Paravi:				No
+ U-NEXT:				No
+ Hulu Japan:				Yes
+ TVer:					Yes
+ GYAO!:					No
+ WOWOW:					Failed
+ VideoMarket:				No
+ FOD(Fuji TV):				No
+ Radiko:				No
+ Karaoke@DAM:				No
+ J:com On Demand:			No
+ ---Game---
+ Kancolle Japan:			No
+ Pretty Derby Japan:			Yes
+ Konosuba Fantastic Days:		No
+ Princess Connect Re:Dive Japan:	Yes
+ World Flipper Japan:			Yes
+ Project Sekai: Colorful Stage:		No
+=======================================
+===========[ North America ]===========
+ FOX:					Yes
+ ESPN+:					No
+ Epix:					No
+ Starz:					No
+ HBO Now:				Yes
+ HBO Max:				Yes
+ BritBox:				Yes
+ NBA TV:				Yes
+ Fubo TV:				Yes
+ Sling TV:				Yes
+ Pluto TV:				Yes
+ Acorn TV:				Yes
+ SHOWTIME:				Yes
+ encoreTVB:				Yes
+ CineMax Go:				Failed (Network Connection)
+ Funimation:				Yes (Region: US)
+ Discovery+:				Yes
+ Paramount+:				Yes
+ Peacock TV:				Yes
+ Directv Stream:			Yes
+ ---CA---
+ CBC Gem:				No
+ Crave:					No
+=======================================
+===========[ South America ]===========
+ Star+:					No
+ HBO Max:				Yes
+ DirecTV Go:				No
+ Funimation:				Yes (Region: US)
+=======================================
+===============[ Europe ]==============
+ Rakuten TV:				Yes
+ Funimation:				Yes (Region: US)
+ HBO Nordic:				Failed (Network Connection)
+ HBO GO Europe:				Failed (Network Connection)
+ ---GB---
+ Sky Go:				No
+ BritBox:				Yes
+ ITV Hub:				No
+ Channel 4:				Failed (Network Connection)
+ Channel 5:				No
+ BBC iPLAYER:				No
+ Discovery+ UK:				No
+ ---FR---
+ Salto:					No
+ Canal+:				No
+ Molotov:				No
+ ---DE---
+ Joyn:					No
+ Sky:					No
+ ZDF: 					No
+ ---NL---
+ NLZIET:				No
+ videoland:				No
+ NPO Start Plus:			No
+ ---ES---
+ HBO Spain:				Failed (Network Connection)
+ PANTAYA:				No
+ ---IT---
+ Rai Play:				No
+ ---RU---
+ Amediateka:				Failed (Network Connection)
+ ---PT---
+ HBO Portugal:				Failed (Network Connection)
+=======================================
+==============[ Oceania ]==============
+ NBA TV:				Yes
+ Acorn TV:				Yes
+ SHOWTIME:				Yes
+ BritBox:				Yes
+ Funimation:				Yes (Region: US)
+ Paramount+:				Yes
+ ---AU---
+ Stan:					Yes
+ Binge:					Yes
+ Docplay:				No
+ Channel 7:				Failed (Network Connection)
+ Channel 9:				No
+ Channel 10:				No
+ ABC iView:				No
+ Kayo Sports:				No
+ Optus Sports:				Yes
+ SBS on Demand:				No
+ ---NZ---
+ Neon TV:				Yes
+ SkyGo NZ:				No
+ ThreeNow:				No
+ Maori TV:				Yes
+=======================================
+当前主机不支持IPv6,跳过...
+
+正在安装 Speedtest-cli
+——————————————————————————————————————————————————————————
+ SuperSpeed 全面测速修复版. By UXH & ernisn & oooldking
+ 节点更新: 2020/06/19 | 脚本更新: 2021/12/23
+ Github: https://github.com/uxh/superspeed
+——————————————————————————————————————[0;31m3633  [0;33m电信|[0;32m上海　　　　　　[0;36m↑ 131.98    [0;34m↓ 438.42    [0;35m235.75  [0m
+[0;31m17145 [0;33m电信|[0;32m安徽合肥５Ｇ　　[0;36m↑ 345.34    [0;34m↓ 395.48    [0;35m247.77  [0m
+[0;31m27594 [0;33m电信|[0;32m广东广州５Ｇ　　[0;36m↑ 96.67     [0;34m↓ 275.42    [0;35m242.71  [0m
+[0;31m26352 [0;33m电信|[0;32m江苏南京５Ｇ　　[0;36m↑ 351.06    [0;34m↓ 529.16    [0;35m239.68  [0m
+[0;31m36663 [0;33m电信|[0;32m江苏镇江５Ｇ　　[0;36m↑ 353.96    [0;34m↓ 369.83    [0;35m244.32  [0m
+[0;31m23844 [0;33m电信|[0;32m湖北武汉　　　　[0;36m↑ 241.22    [0;34m↓ 236.24    [0;35m253.65  [0m
+[0;31m28225 [0;33m电信|[0;32m湖南长沙５Ｇ　　[0;36m↑ 329.61    [0;34m↓ 219.21    [0;35m245.89  [0m
+[0;31m3973  [0;33m电信|[0;32m甘肃兰州　　　　[0;36m↑ 199.93    [0;34m↓ 669.88    [0;35m153.76  [0m
+[0;31m35722 [0;33m电信|[0;32m天津　　　　　　[0;36m↑ 35.56     [0;34m↓ 520.34    [0;35m178.91  [0m
+[0;31m24447 [0;33m联通|[0;32m上海５Ｇ　　　　[0;36m↑ 347.50    [0;34m↓ 726.04    [0;35m247.18  [0m
+[0;31m4870  [0;33m联通|[0;32m湖南长沙　　　　[0;36m↑ 466.91    [0;34m↓ 359.88    [0;35m176.33  [0m
+[0;31m25637 [0;33m移动|[0;32m上海５Ｇ　　　　[0;36m↑ 1.42      [0;34m↓ 277.06    [0;35m335.93  [0m

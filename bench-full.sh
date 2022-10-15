@@ -4576,11 +4576,23 @@ function RunScript() {
     if [[ "$isv4" -eq 1 ]]; then
         Global_UnlockTest 4
         TW_UnlockTest 4
+        HK_UnlockTest 4
+        JP_UnlockTest 4
+        NA_UnlockTest 4
+        SA_UnlockTest 4
+        EU_UnlockTest 4
+        OA_UnlockTest 4
     fi
     CheckV6
     if [[ "$isv6" -eq 1 ]]; then
         Global_UnlockTest 6
         TW_UnlockTest 6
+        HK_UnlockTest 6
+        JP_UnlockTest 6
+        NA_UnlockTest 6
+        SA_UnlockTest 6
+        EU_UnlockTest 6
+        OA_UnlockTest 6
     fi
         # Goodbye
     # fi
